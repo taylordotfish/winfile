@@ -1,4 +1,10 @@
-# ![icon](winfile.png) Windows File Manager (WinFile)
+This is a fork of [WinFile](https://github.com/microsoft/winfile) with changes
+to make it build on GNU/Linux with 64-bit MinGW. All changes are released under
+the same license as WinFile.
+
+---
+
+# Windows File Manager (WinFile)
 
 The Windows File Manager lives again and runs as a native x86 and x64 desktop app
 on all currently supported version of Windows, including Windows 10. I welcome your thoughts, comments and suggestions.

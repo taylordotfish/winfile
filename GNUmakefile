@@ -34,8 +34,9 @@ SRCS = \
 
 OBJS = $(subst .c,.o,$(SRCS)) src/wfgoto.o src/res.o
 
-CFLAGS = -DUNICODE -DFASTMOVE -DSTRSAFE_NO_DEPRECATE -DWINVER=0x0600
-LIBS = -mwindows -lgdi32 -lcomctl32 -lole32 -lshlwapi -loleaut32 -lversion
+CFLAGS = -DUNICODE -DFASTMOVE -DSTRSAFE_NO_DEPRECATE -DWINVER=0x0600 -O2
+LIBS = -mwindows -lgdi32 -lcomctl32 -lole32 -lshlwapi -loleaut32 -lversion \
+	-static-libgcc -static-libstdc++
 TARGET = winfile
 ifeq ($(OS),Windows_NT)
 TARGET := $(TARGET).exe
@@ -47,21 +48,21 @@ endif
 all : $(TARGET)
 
 $(TARGET) : $(OBJS)
-	g++ -o $@ $(OBJS) $(LIBS)
+	x86_64-w64-mingw32-g++ -o $@ $(OBJS) $(LIBS)
 
 .c.o :
-	gcc -c $(CFLAGS) -I. $< -o $@
+	x86_64-w64-mingw32-gcc -c $(CFLAGS) -I. $< -o $@
 
 .cpp.o :
-	g++ -c $(CFLAGS) -I. $< -o $@
+	x86_64-w64-mingw32-g++ -c $(CFLAGS) -I. $< -o $@
 
 src/res.o : src/res.rc src/lang/*.rc src/lang/*.dlg
-	windres -DNOWINRES -I. -i src/res.rc -o src/res.o
+	x86_64-w64-mingw32-windres -DNOWINRES -I. -i src/res.rc -o src/res.o
 
 clean :
 	rm -f $(OBJS) $(TARGET)
 
 depend:
-	gcc -E -MM -w src/*.c > Makefile.depends
+	x86_64-w64-mingw32-gcc -E -MM -w src/*.c > Makefile.depends
 
 -include Makefile.depends
